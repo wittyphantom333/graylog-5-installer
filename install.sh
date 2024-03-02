@@ -63,7 +63,7 @@ read adminpass
 echo "You entered $adminpass (MAKE SURE TO NOT FORGET THIS PASSWORD!)"
 pause 'Press [Enter] key to continue...'
 
-pass_secret=< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-96};echo;
+< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-96};echo; > pass_secret
 sed -i -e "s|password_secret =|password_secret = $pass_secret|" /etc/graylog/server/server.conf
 
 admin_pass_hash=$(echo -n $adminpass|sha256sum|awk '{print $1}')
