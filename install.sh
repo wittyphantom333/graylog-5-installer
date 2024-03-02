@@ -40,7 +40,7 @@ gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc" > /etc/yum.repos.d/mongodb-org.repo
 
-echo "Updating Repositories"
+echo "Updating System"
 dnf update >>setup.log 2>>error.log
 
 echo "Installing Elasticsearch"
@@ -56,14 +56,14 @@ systemctl start mongod >>setup.log 2>>error.log
 systemctl enable mongod >>setup.log 2>>error.log
 
 echo "Installing Graylog 5"
-dnf -y install graylog-server >>setup.log 2>>error.log
+dnf -y install pwgen graylog-server >>setup.log 2>>error.log
 
 echo -n "Enter a password to use for the admin account to login to the Graylog5 webUI: "
 read adminpass
 echo "You entered $adminpass (MAKE SURE TO NOT FORGET THIS PASSWORD!)"
 pause 'Press [Enter] key to continue...'
 
-< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-96};echo; > pass_secret
+pass_secret=$(pwgen -s 96)
 sed -i -e "s|password_secret =|password_secret = $pass_secret|" /etc/graylog/server/server.conf
 
 admin_pass_hash=$(echo -n $adminpass|sha256sum|awk '{print $1}')
