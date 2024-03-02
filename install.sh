@@ -44,7 +44,7 @@ echo "Updating System"
 dnf update >>setup.log 2>>error.log
 
 echo "Installing Elasticsearch"
-dnf install -y elasticsearch-oss >>setup.log 2>>error.log
+dnf install -y pwgen elasticsearch-oss >>setup.log 2>>error.log
 sed -i -e 's|# cluster.name: my-application|cluster.name: graylog|' /etc/elasticsearch/elasticsearch.yml
 systemctl daemon-reload >>setup.log 2>>error.log
 systemctl enable elasticsearch.service >>setup.log 2>>error.log
@@ -56,7 +56,7 @@ systemctl start mongod >>setup.log 2>>error.log
 systemctl enable mongod >>setup.log 2>>error.log
 
 echo "Installing Graylog 5"
-dnf -y install pwgen graylog-server >>setup.log 2>>error.log
+dnf -y install graylog-server >>setup.log 2>>error.log
 
 echo -n "Enter a password to use for the admin account to login to the Graylog5 webUI: "
 read adminpass
@@ -80,7 +80,7 @@ sudo systemctl start graylog-server.service >>setup.log 2>>error.log
 echo "Adding Firewall Rules"
 firewall-cmd --permanent --add-port=9000/tcp >>setup.log 2>>error.log
 firewall-cmd --reload >>setup.log 2>>error.log
-sed -i -e "s|SELINUX=enforcing|SELINUX=disabled" /etc/selinux/config
+sed -i -e "s|SELINUX=enforcing|SELINUX=disabled|" /etc/selinux/config
 setenforce 0
 
 # All Done
