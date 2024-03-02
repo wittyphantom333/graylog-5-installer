@@ -18,7 +18,7 @@ SERVERNAME=$IPADDY
 SERVERALIAS=$IPADDY
 
 echo "Installind PreReqs"
-dnf install nano git wget epel-release -y && dnf update
+dnf install nano git wget epel-release -y
 
 echo "Setting Up Repositories"
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch >>setup.log 2>>error.log
