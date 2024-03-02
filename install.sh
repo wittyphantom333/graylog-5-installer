@@ -80,6 +80,8 @@ sudo systemctl start graylog-server.service >>setup.log 2>>error.log
 echo "Adding Firewall Rules"
 firewall-cmd --permanent --add-port=9000/tcp >>setup.log 2>>error.log
 firewall-cmd --reload >>setup.log 2>>error.log
+sed -i -e "s|SELINUX=enforcing|SELINUX=disabled" /etc/selinux/config
+setenforce 0
 
 # All Done
 echo "Installation has completed!!"
