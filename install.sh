@@ -47,7 +47,7 @@ echo "Installing Pre-Reqs"
 yum install -y wget pwgen >>setup.log 2>>error.log
 
 echo "Installing Elasticsearch"
-yum install -y elasticsearch >>setup.log 2>>error.log
+yum install -y elasticsearch-oss >>setup.log 2>>error.log
 sed -i -e 's|# cluster.name: my-application|cluster.name: graylog|' /etc/elasticsearch/elasticsearch.yml
 systemctl daemon-reload >>setup.log 2>>error.log
 systemctl enable elasticsearch.service >>setup.log 2>>error.log
