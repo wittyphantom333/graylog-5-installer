@@ -35,7 +35,7 @@ type=rpm-md" | sudo tee /etc/yum.repos.d/elasticsearch.repo
 
 echo "[mongodb-org-6.0]
 name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/6.0/x86_64/
+baseurl=https://repo.mongodb.org/yum/redhat/8Server/mongodb-org/6.0/x86_64/
 gpgcheck=1
 enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc" > /etc/yum.repos.d/mongodb-org.repo
