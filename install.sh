@@ -88,6 +88,6 @@ firewall-cmd --reload >>setup.log 2>>error.log
 echo "Installation has completed!!"
 echo "Browse to IP address of this Graylog5 Server Used for Installation"
 echo "IP Address detected from system is $IPADDY"
-echo "Browse to http://$IPADDY:9000"
+echo "Browse to http://'$IPADDY':9000"
 echo "Login with username: admin"
 echo "Login with password: $adminpass"
