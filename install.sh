@@ -18,7 +18,7 @@ SERVERNAME=$IPADDY
 SERVERALIAS=$IPADDY
 
 echo "Installind PreReqs"
-dnf install pwgen git -y
+dnf install nano git wget htop epel-release -y
 
 echo "Setting Up Repositories"
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch >>setup.log 2>>error.log
@@ -31,7 +31,7 @@ gpgcheck=1
 gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
 enabled=1
 autorefresh=1
-type=rpm-md" | sudo tee /etc/yum.repos.d/elasticsearch.repo
+type=rpm-md" > /etc/yum.repos.d/elasticsearch.repo
 
 echo "[mongodb-org-6.0]
 name=MongoDB Repository
@@ -42,9 +42,6 @@ gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc" > /etc/yum.repos.d/mon
 
 echo "Updating Repositories"
 dnf update >>setup.log 2>>error.log
-
-echo "Installing Pre-Reqs"
-dnf install -y wget pwgen >>setup.log 2>>error.log
 
 echo "Installing Elasticsearch"
 dnf install -y elasticsearch-oss >>setup.log 2>>error.log
@@ -66,7 +63,7 @@ read adminpass
 echo "You entered $adminpass (MAKE SURE TO NOT FORGET THIS PASSWORD!)"
 pause 'Press [Enter] key to continue...'
 
-pass_secret=$(pwgen -s 96)
+pass_secret=< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c${1:-96};echo;
 sed -i -e "s|password_secret =|password_secret = $pass_secret|" /etc/graylog/server/server.conf
 
 admin_pass_hash=$(echo -n $adminpass|sha256sum|awk '{print $1}')
