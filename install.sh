@@ -18,7 +18,7 @@ SERVERNAME=$IPADDY
 SERVERALIAS=$IPADDY
 
 echo "Installind PreReqs"
-apt install pwgen git -y
+dnf install pwgen git -y
 
 echo "Setting Up Repositories"
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch >>setup.log 2>>error.log
@@ -41,25 +41,25 @@ enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc" > /etc/yum.repos.d/mongodb-org.repo
 
 echo "Updating Repositories"
-yum update >>setup.log 2>>error.log
+dnf update >>setup.log 2>>error.log
 
 echo "Installing Pre-Reqs"
-yum install -y wget pwgen >>setup.log 2>>error.log
+dnf install -y wget pwgen >>setup.log 2>>error.log
 
 echo "Installing Elasticsearch"
-yum install -y elasticsearch-oss >>setup.log 2>>error.log
+dnf install -y elasticsearch-oss >>setup.log 2>>error.log
 sed -i -e 's|# cluster.name: my-application|cluster.name: graylog|' /etc/elasticsearch/elasticsearch.yml
 systemctl daemon-reload >>setup.log 2>>error.log
 systemctl enable elasticsearch.service >>setup.log 2>>error.log
 systemctl restart elasticsearch.service >>setup.log 2>>error.log
 
 echo "Installing MongoDB"
-yum install -y mongodb-org >>setup.log 2>>error.log
+dnf install -y mongodb-org >>setup.log 2>>error.log
 systemctl start mongod >>setup.log 2>>error.log
 systemctl enable mongod >>setup.log 2>>error.log
 
 echo "Installing Graylog 5"
-yum -y install graylog-server >>setup.log 2>>error.log
+dnf -y install graylog-server >>setup.log 2>>error.log
 
 echo -n "Enter a password to use for the admin account to login to the Graylog5 webUI: "
 read adminpass
