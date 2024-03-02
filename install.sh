@@ -41,10 +41,11 @@ enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc" > /etc/yum.repos.d/mongodb-org.repo
 
 echo "Updating System"
-dnf update >>setup.log 2>>error.log
+dnf update 
+dnf install -y pwgen
 
 echo "Installing Elasticsearch"
-dnf install -y pwgen elasticsearch-oss >>setup.log 2>>error.log
+dnf install -y elasticsearch-oss >>setup.log 2>>error.log
 sed -i -e 's|# cluster.name: my-application|cluster.name: graylog|' /etc/elasticsearch/elasticsearch.yml
 systemctl daemon-reload >>setup.log 2>>error.log
 systemctl enable elasticsearch.service >>setup.log 2>>error.log
